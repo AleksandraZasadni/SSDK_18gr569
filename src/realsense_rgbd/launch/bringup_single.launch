@@ -1,0 +1,15 @@
+<launch>
+	<arg name="camera" default="realsense"/>
+	<arg name="serial_no" default="827312070023"/>
+	<arg name="json_file_path" default="$(find realsense_rgbd)/json/highAccuracy.json"/>
+
+	<include file="$(find realsense_rgbd)/launch/d435_bringup.launch">
+		<arg name="serial_no" value="$(arg serial_no)"/>
+		<arg name="camera" value="$(arg camera)"/>
+		<arg name="json_file_path" value="$(arg json_file_path)"/>
+	</include>
+
+	<!--<node pkg="tf2_ros" type="static_transform_publisher" name="realsense_link_broadcaster"-->
+	<!--args="0.07416 0 1.0736   0 0.2618 1.5708   base_link_tilted   realsense_link"-->
+	<!--/>-->
+</launch>

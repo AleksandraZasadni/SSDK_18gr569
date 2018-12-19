@@ -1,0 +1,8 @@
+<launch>
+	<node pkg="safety" type="safety" name="kugle_sensor_suite_safety" output="screen">
+		<param name="input_current_pose" value="amcl_pose"/>
+		<param name="input_local_costmap" value="move_base/local_costmap/costmap"/>
+		<param name="input_dangerous_areas_map" value="map_dangerous_areas"/>
+		<param name="output_max_velocity" value="current_max_velocity_safety"/>
+	</node>
+</launch>

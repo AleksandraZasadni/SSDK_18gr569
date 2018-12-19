@@ -1,0 +1,41 @@
+<launch>
+	<node pkg="nodelet" type="nodelet" args="manager" name="pcl_manager" output="log"/>
+
+	<!--Filters pcl2 based on Z-->
+	<node pkg="nodelet" type="nodelet" args="load pcl/PassThrough pcl_manager" name="pcl_passthrough_z" output="log">
+		<remap from="~input" to="depth/PointCloud2"/>
+		<remap from="~output" to="depth/PointCloud2_passthrough_z"/>
+		<param name="filter_field_name" value="z"/>
+		<param name="filter_limit_min" value="-5.0"/>
+		<param name="filter_limit_max" value="1.3"/>
+		<param name="input_frame" value="base_link"/>
+		<param name="output_frame" value="base_link"/>
+	</node>
+
+	<!--Filters pcl2 based on Z-->
+	<node pkg="nodelet" type="nodelet" args="load pcl/PassThrough pcl_manager" name="pcl_obstacles_cliffs" output="log">
+		<remap from="~input" to="depth/PointCloud2_passthrough_z"/>
+		<remap from="~output" to="depth/PointCloud2_obstacles_cliffs"/>
+		<param name="filter_field_name" value="z"/>
+		<param name="filter_limit_min" value="-0.25"/>
+		<param name="filter_limit_max" value="0.15"/>
+		<param name="filter_limit_negative" value="true"/>
+	</node>
+
+	<!--Projects pcl2 to XY plane-->
+	<node pkg="realsense_rgbd" type="pcl2_project" name="pcl2_obstacles_cliffs_project" output="log">
+		<param name="input" value="depth/PointCloud2_obstacles_cliffs"/>
+		<param name="output" value="depth/PointCloud2_obstacles_cliffs_projected"/>
+	</node>
+
+	<!--Downsamples pcl2 and filters based on X-->
+	<node pkg="nodelet" type="nodelet" args="load pcl/VoxelGrid pcl_manager" name="pcl_obstacles_cliffs_voxel_grid"
+	      output="log">
+		<remap from="~input" to="depth/PointCloud2_obstacles_cliffs_projected"/>
+		<remap from="~output" to="depth/PointCloud2_obstacles_cliffs_voxel_grid"/>
+		<param name="filter_field_name" value="x"/>
+		<param name="filter_limit_min" value="0.2"/>
+		<param name="filter_limit_max" value="10.0"/>
+		<param name="leaf_size" value="0.07"/>
+	</node>
+</launch>

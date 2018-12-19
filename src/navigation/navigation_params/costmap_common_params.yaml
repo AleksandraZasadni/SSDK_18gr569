@@ -1,0 +1,57 @@
+robot_radius: 0.177
+
+map_type: costmap
+always_send_full_costmap: true
+
+obstacle_layer_global:
+  enabled: true
+  max_obstacle_height: 1.3
+  obstacle_range: 1.25
+  raytrace_range: 25.0
+  track_unknown_space: false
+  combination_method: 1
+
+#  #Stage
+#  observation_sources: laser_scan_sensor
+#  laser_scan_sensor: {data_type: LaserScan, topic: scan, marking: true, clearing: true}
+
+  #IRL
+  observation_sources: lidars
+  lidars: {sensor_frame: lidar_common, data_type: PointCloud2, topic: lidarPointCloud2_merged, marking: true, clearing: true}
+
+
+obstacle_layer_local:
+  enabled: true
+  max_obstacle_height: 1.3
+  obstacle_range: 4.5
+  raytrace_range: 5.0
+  track_unknown_space: false
+  combination_method: 1
+
+#  #Stage
+#  observation_sources: laser_scan_sensor
+#  laser_scan_sensor: {data_type: LaserScan, topic: scan, marking: true, clearing: true}
+
+  #IRL
+  observation_sources: lidars realsense_obstacles_cliffs sonar inflated_people
+  lidars: {sensor_frame: lidar_common, data_type: PointCloud2, topic: lidarPointCloud2_merged, marking: true, clearing: true}
+  sonar: {sensor_frame: sonar, data_type: LaserScan, topic: sonarScan, marking: true, clearing: false, observation_persistence: 0.75}
+  realsense_obstacles_cliffs: {sensor_frame: base_link, data_type: PointCloud2, topic: realsense/depth/PointCloud2_obstacles_cliffs_voxel_grid, marking: true, observation_persistence: 1.5, obstacle_range: 3.0, clearing: false}
+  inflated_people: {sensor_frame: lidar_common, data_type: PointCloud, topic: inflatingPointCloud, marking: true, clearing: false}
+
+
+
+
+inflation_layer_global:
+ enabled:              true
+ cost_scaling_factor:  5.5
+ inflation_radius:     0.5
+
+inflation_layer_local:
+ enabled:              true
+ cost_scaling_factor:  1.9
+ inflation_radius:     0.7
+
+static_layer:
+ enabled:              true
+ map_topic:            "/map"

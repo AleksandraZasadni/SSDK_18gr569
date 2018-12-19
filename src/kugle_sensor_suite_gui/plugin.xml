@@ -1,0 +1,16 @@
+<library path="lib/libkugle_sensor_suite_gui">
+	<class name="kugle_sensor_suite_gui/gui569" type="kugle_sensor_suite_gui::gui569"
+	       base_class_type="rqt_gui_cpp::Plugin">
+		<qtgui>
+			<!-- optional grouping...
+			<group>
+				<label>Group</label>
+			</group>
+			<group>
+				<label>Subgroup</label>
+			</group>
+			-->
+			<label>kugle_sensor_suite_gui_plugin</label>
+		</qtgui>
+	</class>
+</library>

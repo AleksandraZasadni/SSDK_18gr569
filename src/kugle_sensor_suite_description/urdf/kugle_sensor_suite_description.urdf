@@ -1,0 +1,285 @@
+<robot
+  name="kugle_sensor_suite_description">
+  <link
+    name="base_link_tilted">
+    <inertial>
+      <origin
+        xyz="-0.00301383563785555 -4.20447337898395E-05 0.055696890436616"
+        rpy="0 0 0" />
+      <mass
+        value="7.8090575542003" />
+      <inertia
+        ixx="0.00218583565437956"
+        ixy="4.01641485879307E-09"
+        ixz="1.67472535609338E-05"
+        iyy="7.27886330294267E-05"
+        iyz="-1.64775506410208E-08"
+        izz="0.00212121133162909" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://kugle_sensor_suite_description/meshes/base_link_tilted.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.321568627 0.380392157 0.431372549 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://kugle_sensor_suite_description/meshes/base_link_tilted.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="lidar_common">
+    <inertial>
+      <origin
+        xyz="1.73472347597681E-18 9.10184598306514E-17 -0.0305272031258927"
+        rpy="0 0 0" />
+      <mass
+        value="0.418986267236306" />
+      <inertia
+        ixx="0.00333419022034395"
+        ixy="-4.83361878712875E-07"
+        ixz="1.4939096308522E-18"
+        iyy="2.16837897251315E-05"
+        iyz="1.29187223281671E-14"
+        izz="0.00331503400546597" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://kugle_sensor_suite_description/meshes/lidar_common.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.321568627 0.380392157 0.431372549 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://kugle_sensor_suite_description/meshes/lidar_common.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="lidar_common_joint"
+    type="fixed">
+    <origin
+      xyz="0.00769999999999983 0 0.463047098888623"
+      rpy="2.22044604929405E-16 1.73472120937362E-18 0" />
+    <parent
+      link="base_link_tilted" />
+    <child
+      link="lidar_common" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="lidar_R" />
+  <joint
+    name="lidar_r_joint"
+    type="fixed">
+    <origin
+      xyz="0 -0.0906060065899628 0"
+      rpy="6.72795210735763E-12 1.26634824627944E-14 -1.5707963267949" />
+    <parent
+      link="lidar_common" />
+    <child
+      link="lidar_R" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="lidar_L" />
+  <joint
+    name="lidar_l_joint"
+    type="fixed">
+    <origin
+      xyz="0 0.0906060065899628 0"
+      rpy="6.72795210735763E-12 1.26634824627961E-14 1.5707963267949" />
+    <parent
+      link="lidar_common" />
+    <child
+      link="lidar_L" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="sonar">
+    <inertial>
+      <origin
+        xyz="-0.0151546217644447 0.00155383068176715 -0.00448198911449543"
+        rpy="0 0 0" />
+      <mass
+        value="0.00865687925159544" />
+      <inertia
+        ixx="1.26512652324336E-07"
+        ixy="3.5899527347839E-08"
+        ixz="-1.79696271425092E-07"
+        iyy="3.87081371217579E-07"
+        iyz="2.43045282329257E-08"
+        izz="2.70279783781286E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="-0.0151546217644448 0.00155383068176716 -0.019844819891144954"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://kugle_sensor_suite_description/meshes/sonar.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.321568627 0.380392157 0.431372549 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="-0.0151546217644448 0.00155383068176716 -0.019844819891144954"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://kugle_sensor_suite_description/meshes/sonar.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="sonar_joint"
+    type="fixed">
+    <origin
+      xyz="0.0930161999999998 0.00218359999963151 0.375000000000046"
+      rpy="-3.14159265358979 6.98469739889564E-15 2.35228503342455E-15" />
+    <parent
+      link="base_link_tilted" />
+    <child
+      link="sonar" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="realsense_link">
+    <inertial>
+      <origin
+        xyz="-0.0124672977688214 -0.0158182835716583 2.49566537557512E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.0381925759002226" />
+      <inertia
+        ixx="1.11202927344454E-06"
+        ixy="1.15477257099603E-07"
+        ixz="2.59965314102112E-08"
+        iyy="1.55473409738341E-06"
+        iyz="2.08679145327879E-08"
+        izz="2.60086723399201E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://kugle_sensor_suite_description/meshes/realsense_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.321568627 0.380392157 0.431372549 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://kugle_sensor_suite_description/meshes/realsense_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="realsense_joint"
+    type="fixed">
+    <origin
+      xyz="0.0741604271836051 0 1.07356708408033"
+      rpy="1.5707963267949 0.261799387799143 1.15865951206672E-17" />
+    <parent
+      link="base_link_tilted" />
+    <child
+      link="realsense_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="stl_link">
+    <inertial>
+      <origin
+        xyz="0.00340742446662251 0.648645148200617 0.000270875918048139"
+        rpy="0 0 0" />
+      <mass
+        value="1.79097490530036" />
+      <inertia
+        ixx="0.109211218943115"
+        ixy="0.00633989304656072"
+        ixz="3.06193839198204E-05"
+        iyy="0.00323707998470844"
+        iyz="-0.000228290652664393"
+        izz="0.109589892064862" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://kugle_sensor_suite_description/meshes/stl_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.321568627 0.380392157 0.431372549 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://kugle_sensor_suite_description/meshes/stl_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="stl_link"
+    type="fixed">
+    <origin
+      xyz="0 0 0"
+      rpy="1.5707963267949 0 0" />
+    <parent
+      link="base_link_tilted" />
+    <child
+      link="stl_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+</robot>

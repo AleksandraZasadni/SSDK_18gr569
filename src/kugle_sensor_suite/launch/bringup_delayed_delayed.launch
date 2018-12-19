@@ -1,0 +1,8 @@
+<launch>
+	<include file="$(find safety)/launch/bringup.launch"/>
+	<include file="$(find guidance)/launch/bringup.launch"/>
+
+	<node pkg="rviz" type="rviz" name="rviz_kugle_sensor_suite"
+	      args="-d $(find guidance)/rviz.rviz"/>
+	<node pkg="rqt_gui" type="rqt_gui" name="kugle_sensor_suite_gui"/>
+</launch>

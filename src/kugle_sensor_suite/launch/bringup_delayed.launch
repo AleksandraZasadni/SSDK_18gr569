@@ -1,0 +1,24 @@
+<launch>
+	<include file="$(find human_detection)/launch/bringup.launch"/>
+
+	<include file="$(find timed_roslaunch)/launch/timed_roslaunch.launch">
+		<arg name="time" value="5"/>
+		<arg name="pkg" value="realsense_rgbd"/>
+		<arg name="file" value="bringup_single.launch"/>
+		<arg name="node_name" value="realsense_timed_roslaunch"/>
+	</include>
+
+	<include file="$(find timed_roslaunch)/launch/timed_roslaunch.launch">
+		<arg name="time" value="10"/>
+		<arg name="pkg" value="navigation"/>
+		<arg name="file" value="bringup.launch"/>
+		<arg name="node_name" value="navigation_timed_roslaunch"/>
+	</include>
+
+	<include file="$(find timed_roslaunch)/launch/timed_roslaunch.launch">
+		<arg name="time" value="15"/>
+		<arg name="pkg" value="kugle_sensor_suite"/>
+		<arg name="file" value="bringup_delayed_delayed.launch"/>
+		<arg name="node_name" value="kugle_sensor_suite_timed_roslaunch2"/>
+	</include>
+</launch>

@@ -1,0 +1,25 @@
+<launch>
+	<arg name="camera1" default="realsense_front"/>
+	<arg name="camera2" default="realsense_rear"/>
+	<arg name="serial_no1" default="827312070023"/>
+	<arg name="serial_no2" default="827312072502"/>
+	<arg name="json_file_path" default="$(find realsense_rgbd)/json/d435_custom.json"/>
+
+	<include file="$(find realsense_rgbd)/launch/d435_bringup.launch">
+		<arg name="serial_no" value="$(arg serial_no1)"/>
+		<arg name="camera" value="$(arg camera1)"/>
+		<arg name="json_file_path" value="$(arg json_file_path)"/>
+	</include>
+	<include file="$(find realsense_rgbd)/launch/d435_bringup.launch">
+		<arg name="serial_no" value="$(arg serial_no2)"/>
+		<arg name="camera" value="$(arg camera2)"/>
+		<arg name="json_file_path" value="$(arg json_file_path)"/>
+	</include>
+
+	<!--<node pkg="tf2_ros" type="static_transform_publisher" name="$(arg camera)_link_broadcaster"-->
+	<!--args="0.07416 0 1.0736   0 0.2618 1.5708   base_link_tilted   $(arg camera1)_link"-->
+	<!--/>-->
+	<!--<node pkg="tf2_ros" type="static_transform_publisher" name="$(arg camera)_link_broadcaster"-->
+	<!--args="0 0 0   0 0 0    base_link_tilted   $(arg camera2)_link"-->
+	<!--/>-->
+</launch>

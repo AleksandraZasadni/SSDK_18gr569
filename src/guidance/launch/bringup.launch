@@ -1,0 +1,3 @@
+<launch>
+	<node pkg="guidance" type="guide" name="kugle_sensor_suite_guidance"/>
+</launch>

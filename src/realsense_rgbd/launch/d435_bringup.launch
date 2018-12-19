@@ -1,0 +1,101 @@
+<launch>
+	<arg name="manager" default="realsense2_camera_manager"/>
+	<arg name="camera" default="camera"/>
+	<arg name="serial_no" default=""/>
+	<arg name="tf_prefix" default="$(arg camera)"/>
+	<arg name="json_file_path" default=""/>
+
+	<arg name="enable_depth" default="true"/>
+	<arg name="depth_width" default="1280"/>
+	<arg name="depth_height" default="720"/>
+
+	<arg name="enable_infra1" default="false"/>
+	<arg name="infra1_width" default="1280"/>
+	<arg name="infra1_height" default="720"/>
+
+	<arg name="enable_infra2" default="false"/>
+	<arg name="infra2_width" default="1280"/>
+	<arg name="infra2_height" default="720"/>
+
+	<arg name="enable_color" default="false"/>
+	<arg name="color_width" default="1920"/>
+	<arg name="color_height" default="1080"/>
+
+	<arg name="depth_fps" default="6"/>
+	<arg name="infra1_fps" default="6"/>
+	<arg name="infra2_fps" default="6"/>
+	<arg name="color_fps" default="6"/>
+
+	<arg name="filters" default=""/>
+
+	<arg name="enable_pointcloud" default="false"/> <!--Enables pointCloud_XYZRGB with reduced FOV (of the RGB)-->
+	<arg name="align_depth" default="false"/>
+
+	<!--Camera init-->
+	<group ns="$(arg camera)">
+		<include file="$(find realsense2_camera)/launch/includes/nodelet.launch.xml">
+			<arg name="manager" value="$(arg manager)"/>
+			<arg name="serial_no" value="$(arg serial_no)"/>
+			<arg name="tf_prefix" value="$(arg tf_prefix)"/>
+			<arg name="json_file_path" value="$(arg json_file_path)"/>
+
+			<arg name="enable_depth" value="$(arg enable_depth)"/>
+			<arg name="depth_width" value="$(arg depth_width)"/>
+			<arg name="depth_height" value="$(arg depth_height)"/>
+
+			<arg name="enable_infra1" value="$(arg enable_infra1)"/>
+			<arg name="infra1_width" value="$(arg infra1_width)"/>
+			<arg name="infra1_height" value="$(arg infra1_height)"/>
+
+			<arg name="enable_infra2" value="$(arg enable_infra2)"/>
+			<arg name="infra2_width" value="$(arg infra2_width)"/>
+			<arg name="infra2_height" value="$(arg infra2_height)"/>
+
+			<arg name="enable_color" value="$(arg enable_color)"/>
+			<arg name="color_width" value="$(arg color_width)"/>
+			<arg name="color_height" value="$(arg color_height)"/>
+
+			<arg name="depth_fps" value="$(arg depth_fps)"/>
+			<arg name="infra1_fps" value="$(arg infra1_fps)"/>
+			<arg name="infra2_fps" value="$(arg infra2_fps)"/>
+			<arg name="color_fps" value="$(arg color_fps)"/>
+
+			<arg name="filters" value="$(arg filters)"/>
+
+			<arg name="enable_pointcloud" value="$(arg enable_pointcloud)"/>
+			<arg name="align_depth" value="$(arg align_depth)"/>
+		</include>
+
+
+		<!--&lt;!&ndash;This node crops the depth image to remove noisy readings at image boundaries&ndash;&gt;-->
+		<node pkg="nodelet" type="nodelet" args="load image_proc/crop_decimate $(arg manager)" name="depth_cropper"
+		      output="log">
+			<remap from="camera/camera_info" to="depth/camera_info"/>
+			<remap from="camera/image_raw" to="depth/image_rect_raw"/>
+			<remap from="camera_out/camera_info" to="depth/camera_info_cropped"/>
+			<remap from="camera_out/image_raw" to="depth/image_cropped"/>
+			<param name="queue_size" value="1"/>
+			<param name="x_offset" value="0"/>
+			<param name="y_offset" value="72"/>
+			<param name="width" value="1152"/>
+			<param name="height" value="576"/>
+		</node>
+
+		<!--This node converts depth image to PointCloud2 (while keeping almost full FOV)-->
+		<node pkg="nodelet" type="nodelet" args="load depth_image_proc/point_cloud_xyz $(arg manager)"
+		      name="depth_to_PointCloud2" output="log">
+			<remap from="camera_info" to="depth/camera_info_cropped"/>
+			<remap from="image_rect" to="depth/image_cropped"/>
+			<remap from="points" to="depth/PointCloud2"/>
+		</node>
+
+
+		<include file="$(find timed_roslaunch)/launch/timed_roslaunch.launch">
+			<arg name="time" value="5"/>
+			<arg name="pkg" value="realsense_rgbd"/>
+			<arg name="file" value="d435_bringup_delayed.launch"/>
+			<arg name="node_name" value="d435_timed_roslaunch"/>
+		</include>
+
+	</group>
+</launch>

@@ -1,0 +1,6 @@
+image: FBV_7C_L1_0.20325.pgm
+resolution: 0.20325
+origin: [0.0, 0.0, 0.0]
+occupied_thresh: 0.9
+free_thresh: 0.1
+negate: 0

@@ -1,0 +1,11 @@
+<launch>
+	<node pkg="ira_laser_tools" type="laserscan_multi_merger" name="sonarScan_merger" output="log">
+		<param name="destination_frame" value="sonar_common"/>
+		<param name="laserscan_topics" value="/sonarScan_R /sonarScan_L"/>
+		<param name="scan_destination_topic" value="sonarScan_merged"/>
+		<param name="cloud_destination_topic" value="sonarPointCloud2_merged"/>
+		<param name="angle_min" value="-3.14"/>
+		<param name="angle_max" value="3.14"/>
+		<param name="scan_time" value="0"/>
+	</node>
+</launch>

@@ -1,0 +1,14 @@
+<launch>
+	<arg name="device_dev" default="ttyACM0"/>
+
+	<node pkg="rosserial_python" type="serial_node.py" name="arduino_rosserial_node" output="log">
+		<param name="port" value="/dev/$(arg device_dev)"/>
+		<param name="baud" value="57600"/>
+	</node>
+
+	<node pkg="imu" type="imu_tf" name="imu_tf">
+		<param name="input" value="tilt_angle"/>
+		<param name="base_link" value="base_link"/>
+		<param name="imu_frame" value="base_link_tilted"/>
+	</node>
+</launch>

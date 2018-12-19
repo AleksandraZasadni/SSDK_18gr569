@@ -1,0 +1,14 @@
+<launch>
+	<include file="$(find kugle_sensor_suite)/launch/mobile_base.launch"/>
+	<include file="$(find kugle_sensor_suite_description)/launch/display.launch"/>
+	<include file="$(find imu)/launch/bringup.launch"/>
+	<include file="$(find sick_lidar)/launch/bringup.launch"/>
+	<include file="$(find maxbotix_sonar)/launch/bringup_single.launch"/>
+
+	<include file="$(find timed_roslaunch)/launch/timed_roslaunch.launch">
+		<arg name="time" value="15"/>
+		<arg name="pkg" value="kugle_sensor_suite"/>
+		<arg name="file" value="bringup_delayed.launch"/>
+		<arg name="node_name" value="kugle_sensor_suite_timed_roslaunch"/>
+	</include>
+</launch>

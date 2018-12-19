@@ -1,0 +1,52 @@
+<launch>
+	<node pkg="sick_tim" type="sick_tim551_2050001" respawn="false" name="sick_tim571_R" output="log">
+		<remap from="scan" to="lidarScan_R"/>
+
+		<param name="device_number" value="0"/>
+		<param name="frame_id" value="lidar_R"/>
+		<param name="min_ang" value="-2.35619449019"/>
+		<param name="max_ang" value="2.35619449019"/>
+		<param name="range_min" value="0.05"/>
+		<param name="range_max" value="25.0"/>
+		<param name="intensity" value="False"/>
+		<param name="skip" value="1"/>
+		<!--<param name="time_offset"           value="-0.001"/>-->
+		<!--<param name="time_increment"        value="0.000061722"/> -->
+		<!--<param name="publish_datagram"      value="False"/>-->
+		<!--<param name="subscribe_datagram"    value="False"/>-->
+	</node>
+	<node pkg="sick_tim" type="sick_tim551_2050001" respawn="false" name="sick_tim571_L" output="log">
+		<remap from="scan" to="lidarScan_L"/>
+
+		<param name="device_number" value="1"/>
+		<param name="frame_id" value="lidar_L"/>
+		<param name="min_ang" value="-2.35619449019"/>
+		<param name="max_ang" value="2.35619449019"/>
+		<param name="range_min" value="0.05"/>
+		<param name="range_max" value="25.0"/>
+		<param name="intensity" value="False"/>
+		<param name="skip" value="1"/>
+		<!--<param name="time_offset"           value="-0.001"/>-->
+		<!--<param name="time_increment"        value="0.000061722"/> -->
+		<!--<param name="publish_datagram"      value="False"/>-->
+		<!--<param name="subscribe_datagram"    value="False"/>-->
+	</node>
+
+	<!--<node pkg="tf2_ros" type="static_transform_publisher" name="lidar_common_broadcaster"-->
+	<!--args="0.0077 0 0.46305   0 0 0   base_link_tilted   lidar_common"-->
+	<!--/>-->
+	<!--<node pkg="tf2_ros" type="static_transform_publisher" name="lidar_R_broadcaster"-->
+	<!--args="0 -0.090606 0 -1.5708 0 0   lidar_common   lidar_R"-->
+	<!--/>-->
+	<!--<node pkg="tf2_ros" type="static_transform_publisher" name="lidar_L_broadcaster"-->
+	<!--args="0 0.090606 0   1.5708 0 0   lidar_common   lidar_L"-->
+	<!--/>-->
+
+
+	<include file="$(find timed_roslaunch)/launch/timed_roslaunch.launch">
+		<arg name="time" value="10"/>
+		<arg name="pkg" value="sick_lidar"/>
+		<arg name="file" value="bringup_delayed.launch"/>
+		<arg name="node_name" value="sick_lidar_delayed_bringup"/>
+	</include>
+</launch>

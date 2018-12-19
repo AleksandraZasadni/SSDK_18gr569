@@ -1,0 +1,16 @@
+<launch>
+	<node pkg="maxbotix_sonar" type="publish" name="sonar_publish" output="log">
+		<param name="device_port" value="ttyUSB0"/>
+		<param name="output" value="sonarRange"/>
+	</node>
+
+	<node pkg="maxbotix_sonar" type="scan" name="sonar_scan" output="log">
+		<param name="input" value="sonarRange"/>
+		<param name="output" value="sonarScan"/>
+		<param name="frame_id" value="sonar"/>
+	</node>
+
+	<!--<node pkg="tf2_ros" type="static_transform_publisher" name="sonar_R_broadcaster"-->
+	<!--args="0.0930162 0.0021836 0.375   0 0 -3.1416   base_link_tilted   sonar"-->
+	<!--/>-->
+</launch>

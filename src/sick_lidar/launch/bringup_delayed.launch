@@ -1,0 +1,31 @@
+<launch>
+	<node pkg="ira_laser_tools" type="laserscan_multi_merger" name="laserScan_merger" output="log">
+		<param name="destination_frame" value="lidar_common"/>
+		<param name="laserscan_topics" value="/lidarScan_R /lidarScan_L"/>
+		<param name="scan_destination_topic" value="lidarScan_merged"/>
+		<param name="cloud_destination_topic" value="lidarPointCloud2_merged"/>
+		<param name="angle_min" value="-3.1415"/>
+		<param name="angle_max" value="3.1415"/>
+		<param name="angle_increment" value="0.00575958653"/>
+		<param name="scan_time" value="0.0666666667"/>
+		<param name="range_min" value="0.2"/>
+		<param name="range_max" value="25.0"/>
+	</node>
+
+	<node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan" output="log">
+		<remap from="cloud_in" to="lidarPointCloud2_merged"/>
+		<remap from="scan" to="lidarScan_merged_tilt_corrected"/>
+
+		<param name="min_height" value="0.41305"/> <!--0.46305-0.05-->
+		<param name="max_height" value="0.51305"/> <!--0.46305+0.05-->
+		<param name="angle_min" value="-3.1415"/>
+		<param name="angle_max" value="3.1415"/>
+		<param name="angle_increment" value="0.00575958653"/>
+		<param name="scan_time" value="0.0666666667"/>
+		<param name="range_min" value="0.2"/>
+		<param name="range_max" value="25.0"/>
+		<param name="target_frame" value="base_link"/>
+		<param name="concurrency_level" value="1"/>
+		<param name="use_inf" value="False"/>
+	</node>
+</launch>

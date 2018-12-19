@@ -1,0 +1,6 @@
+<launch>
+	<arg name="kugle_sensor_suite_description"/>
+	<param name="robot_description"
+	       textfile="$(find kugle_sensor_suite_description)/urdf/kugle_sensor_suite_description.urdf"/>
+	<node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher"/>
+</launch>

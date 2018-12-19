@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<launch>
+	<!-- params -->
+	<param name="forest_file" value="$(find leg_tracker)/config/trained_leg_detector_res=0.33.yaml"/>
+	<param name="scan_topic" value="lidarScan_merged"/>
+	<param name="fixed_frame" value="odom"/>
+	<param name="scan_frequency" value="7.5"/>
+	<param name="min_points_per_cluster" value="10"/>
+	<param name="cluster_dist_euclid" value="0.06"/>
+	<param name="max_detect_distance" value="4.0"/>
+	<param name="max_leg_pairing_dist" value="0.6"/>
+	<param name="confidence_treshold_to_maintain_track" value="0.6"/>
+
+	<!-- run detect_leg_clusters -->
+	<node pkg="leg_tracker" type="detect_leg_clusters" name="detect_leg_clusters" output="log"/>
+
+	<!-- run joint_leg_tracker -->
+	<node pkg="leg_tracker" type="joint_leg_tracker.py" name="joint_leg_tracker" output="log"/>
+
+	<!-- run local_occupancy_grid_mapping -->
+	<node pkg="leg_tracker" type="local_occupancy_grid_mapping" name="local_occupancy_grid_mapping" output="log"/>
+
+	<node pkg="human_detection" type="people_inflator" name="people_inflator" output="log">
+		<param name="input" value="people_tracked"/>
+		<param name="output" value="inflatingPointCloud"/>
+		<param name="frame_id" value="odom"/>
+	</node>
+</launch>
